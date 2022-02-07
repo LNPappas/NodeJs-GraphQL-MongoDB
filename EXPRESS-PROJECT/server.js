@@ -1,8 +1,12 @@
 const express = require("express");
+const path = require("path");
 const friendsRouter = require("./routes/friends.router");
 const messagesRouter = require("./routes/messages.router");
 const PORT = 3000;
 const app = express();
+
+app.set("view engine", "hbs");
+app.set("views", path.join(__dirname, "views"));
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -14,10 +18,11 @@ app.use((req, res, next) => {
   );
 });
 
+app.use("/site", express.static(path.join(__dirname, "public")));
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Hello! time for express...");
+  res.render("index.hbs", { title: "Friends!", caption: "Time to Play!" });
 });
 
 app.use("/friends", friendsRouter);
