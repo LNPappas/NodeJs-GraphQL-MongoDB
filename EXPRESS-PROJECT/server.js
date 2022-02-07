@@ -1,51 +1,27 @@
 const express = require("express");
-
+const friendsRouter = require("./routes/friends.router");
+const messagesRouter = require("./routes/messages.router");
+const PORT = 3000;
 const app = express();
 
-const PORT = 3000;
-
-const friends = [
-  {
-    id: 0,
-    name: "Lauren",
-  },
-  {
-    id: 1,
-    name: "Pappas",
-  },
-  {
-    id: 2,
-    name: "LNPappas",
-  },
-];
-
-app.get("/friends", (req, res) => {
-  res.json(friends);
+app.use((req, res, next) => {
+  const start = Date.now();
+  next();
+  const delta = Date.now();
+  -start;
+  console.log(
+    `${req.method} ${req.baseUrl}${req.url} Time Elapsed: ${delta}ms`
+  );
 });
 
-app.get("/friends/:id", (req, res) => {
-  const id = req.params.id;
-  const friend = friends[+id];
-  if (friend) {
-    res.json(friend);
-  } else {
-    res.status(404).json({ error: "Friend does not exist" });
-  }
-});
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Hello! time for express...");
 });
 
-app.get("/messages", (req, res) => {
-  res.send(
-    "<ul><li>Welcome to the express server!</li><li>it's way better.</li></ul>"
-  );
-});
-
-app.post("/messages", (req, res) => {
-  console.log("updating messages...");
-});
+app.use("/friends", friendsRouter);
+app.use("/messages", messagesRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}...`);
