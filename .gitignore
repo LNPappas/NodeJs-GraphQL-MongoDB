@@ -107,5 +107,6 @@ package-lock.json
 
 .vscode
 
-EXPRESS-PROJECTS
-HTTP-SERVER
+./EXPRESS-PROJECTS
+./HTTP-SERVER
+./learn/
