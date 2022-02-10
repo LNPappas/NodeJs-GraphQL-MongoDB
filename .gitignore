@@ -103,10 +103,6 @@ dist
 # TernJS port file
 .tern-port
 
-# practice code
-eventEmit.js
-promises.mjs
-spread_op.js
-learn
-
 package-lock.json
+
+.vscode
